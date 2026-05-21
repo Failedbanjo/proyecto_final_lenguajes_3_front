@@ -1,0 +1,93 @@
+.login-page {
+  background-color: #000;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.login-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: #111;
+}
+
+.brand-panel {
+  flex: 1;
+  background-image: url('https://www.riotgames.com/darkroom/1440/0a8b4600c88cc7e4bd392b90405f892a:db36c4fc05c48e6fd4fb6b9799f6b2ca/11-20-embargo-riot-riotxarcane-phase02-4k.jpg'); // O tu imagen de T1/Faker
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 60px;
+  
+  .brand-title {
+    color: #fff;
+    font-size: 3rem;
+    line-height: 1;
+    .gold { color: #d0a85c; }
+  }
+}
+
+.form-panel {
+  width: 450px;
+  background: #f9f9f9; // El gris claro de Riot
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  color: #111;
+}
+
+.riot-input {
+  width: 100%;
+  padding: 12px;
+  background: #ededed;
+  border: none;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-weight: bold;
+  &:focus { outline: 2px solid #111; }
+}
+
+.field-group {
+  margin-bottom: 20px;
+  label { font-size: 11px; font-weight: 800; color: #333; }
+}
+
+.riot-btn-red {
+  width: 100%;
+  padding: 15px;
+  background: #d13639;
+  color: white;
+  border: none;
+  border-radius: 15px; // Un poco redondeado como Riot
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover { background: #b02a2d; }
+  &:disabled { background: #555; // Un gris más oscuro para que se lea el blanco
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;}
+}
+
+.code-input {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 10px;
+}
+
+.d-none {
+  display: none !important;
+}
+
+// Estilo extra para que el código se vea centrado y grande
+.code-input {
+  text-align: center;
+  font-size: 24px !important;
+  letter-spacing: 8px;
+  font-family: monospace;
+}

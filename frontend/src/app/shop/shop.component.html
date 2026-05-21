@@ -1,0 +1,66 @@
+<div class="shop-page-wrapper">
+  <div class="background-overlay"></div>
+
+  <nav class="shop-nav">
+    <div class="logo" (click)="volverAlInicio()">← VOLVER AL INICIO</div>
+    <div class="shop-title">TIENDA <span class="accent">HEXTECH</span></div>
+  </nav>
+
+  <main class="shop-container">
+    <section class="selection-area">
+      <h2 class="riot-title">MÉTODOS DE COMPRA DISPONIBLES</h2>
+      <div class="packages-grid">
+        <div class="item-card" *ngFor="let p of paquetes" [class.popular-border]="p.popular">
+          <div class="badge-popular" *ngIf="p.popular">MÁS COMPRADO</div>
+          <div class="rp-icon-container">
+            <img src="https://skycoach.gg/storage/uploads/products/league-of-legends-rp1712479237_picture_item_small.png" alt="RP Icon">
+          </div>
+          <div class="item-info">
+            <h3 class="rp-amount">{{ p.rp }} RP</h3>
+            <p class="price">${{ p.precio }} USD</p>
+          </div>
+          <button class="btn-buy" (click)="agregarPaquete(p.rp, p.precio)">AÑADIR AL PEDIDO</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side-panel">
+      <div class="summary-box">
+        <h2 class="panel-title">RESUMEN</h2>
+        <div class="summary-line">
+          <span>PAQUETES:</span>
+          <span class="white-text">{{ cartCount }}</span>
+        </div>
+        <div class="summary-line highlight">
+          <span>TOTAL RP:</span>
+          <span class="gold-text">{{ rpTotal }} RP</span>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-line total">
+          <span>A PAGAR:</span>
+          <span class="green-text">${{ precioTotal | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="payment-box">
+        <h2 class="panel-title">MÉTODO DE PAGO</h2>
+        <div class="payment-options">
+          <div class="pay-option active">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg/3840px-Visa_Inc._logo_%282021%E2%80%93present%29.svg.png" alt="Visa">
+          </div>
+          <div class="pay-option">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png" alt="PayPal">
+          </div>
+          <div class="pay-option">
+            <img src="https://1000marcas.net/wp-content/uploads/2019/12/logo-Mastercard.png" alt="Mastercard">
+          </div>
+        </div>
+        
+        <button class="btn-checkout" [disabled]="cartCount === 0" (click)="completarCompra()">
+          COMPLETAR COMPRA
+        </button>
+        <button class="btn-clear" (click)="limpiarCarrito()">VACIAR</button>
+      </div>
+    </aside>
+  </main>
+</div>

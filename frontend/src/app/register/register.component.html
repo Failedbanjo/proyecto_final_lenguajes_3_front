@@ -1,0 +1,74 @@
+<div class="login-page">
+  <div class="login-container">
+    <div class="brand-panel">
+      <div class="brand-content">
+        <div class="logo-wrapper">
+          <img src="https://static.wikia.nocookie.net/leagueoflegends/images/5/53/Riot_Games_logo_icon.png/revision/latest?cb=20220302144707S" alt="Riot Logo" class="riot-logo">
+        </div>
+        <h1 class="brand-title">COMIENZA TU<br><span class="gold">LEYENDA.</span></h1>
+        <p class="brand-desc">Crea una cuenta para acceder a League of Legends, VALORANT y más.</p>
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-box">
+        
+        <div [class.d-none]="step !== 1">
+          <h2 class="form-title">CREAR CUENTA</h2>
+          <div class="login-form"> 
+            <div class="field-group">
+              <label>NOMBRE DE USUARIO</label>
+              <input type="text" [(ngModel)]="username" name="username" class="riot-input">
+            </div>
+
+            <div class="field-group">
+              <label>CORREO ELECTRÓNICO</label>
+              <input type="email" [(ngModel)]="email" name="email" class="riot-input">
+            </div>
+
+            <div class="field-group">
+              <label>CONTRASEÑA</label>
+              <input type="password" [(ngModel)]="password" name="password" class="riot-input">
+            </div>
+
+            @if (errorMessage) {
+              <p style="color: red; font-size: 12px; margin-bottom: 10px;">{{ errorMessage }}</p>
+            }
+
+            <button type="button" class="riot-btn-red" (click)="onRegister()" [disabled]="isLoading">
+              {{ isLoading ? 'ESPERA...' : 'SIGUIENTE' }}
+            </button>
+          </div>
+        </div>
+
+        <div [class.d-none]="step !== 2">
+          <h2 class="form-title">REVISA TU CORREO</h2>
+          <p class="verify-desc" style="color: #333; margin-bottom: 20px;">
+            Enviamos un código a <strong>{{ email }}</strong>
+          </p>
+          
+          <p *ngIf="errorMessage" style="color: #ff4655; font-size: 12px; margin-bottom: 10px; text-align: center;">
+            {{ errorMessage }}
+          </p>
+          
+          <div class="field-group">
+            <label>CÓDIGO DE VERIFICACIÓN</label>
+            <input type="text" [(ngModel)]="verificationCode" class="riot-input code-input" placeholder="000000" maxlength="6">
+          </div>
+
+          <button type="button" class="riot-btn-red" (click)="confirmCode()" [disabled]="isLoading">
+            {{ isLoading ? 'VERIFICANDO...' : 'VERIFICAR' }}
+          </button>
+          
+          <p style="font-size: 12px; color: #666; margin-top: 15px; text-align: center; cursor: pointer;">
+            ¿No recibiste el código? <span style="text-decoration: underline;">Reenviar</span>
+          </p>
+        </div>
+
+        <div class="form-footer" style="margin-top: 20px;">
+          <p>¿Ya tienes cuenta? <a routerLink="/login">INICIAR SESIÓN</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

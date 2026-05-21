@@ -1,0 +1,267 @@
+<!-- NAVBAR -->
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <div class="nav-left">
+    <div class="riot-logo">
+      <span class="logo-riot">RIOT</span>
+      <span class="logo-games">GAMES</span>
+    </div>
+    <ul class="nav-links">
+      <li><a (click)="scrollToGames()" style="cursor: pointer;">JUEGOS</a></li>
+      <li><a (click)="scrollToNews()" style="cursor: pointer;">NOTICIAS</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-btn lang-btn">ES</button>
+
+    <ng-container *ngIf="isLoggedIn; else loginBtn">
+      <div class="user-info-nav">
+        <div class="cart-trigger" (click)="irALaTienda()">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+        </div>
+
+        <span class="summoner-label">INVOCADOR:</span>
+        <span class="summoner-name">{{ username | uppercase }}</span>
+        <button class="logout-icon" (click)="logout()">✕</button>
+      </div>
+    </ng-container>
+
+    <ng-template #loginBtn>
+      <button class="nav-btn login-btn" (click)="openLogin()">INICIAR SESION</button>
+    </ng-template>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="/lospapus.jpeg" alt="Background" class="hero-img-main">
+
+    <div class="hero-overlay"></div>
+    <div class="hero-particles">
+      <span *ngFor="let p of particles" class="particle" [style.left.%]="p.x" [style.top.%]="p.y"
+        [style.width.px]="p.size" [style.height.px]="p.size" [style.animation-delay]="p.delay + 's'">
+      </span>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tagline">FORJADO PARA LOS JUGADORES</div>
+    <h1 class="hero-title">
+      <span class="title-line">JUEGOS QUE</span>
+      <span class="title-line accent">DEFINEN</span>
+      <span class="title-line">GENERACIONES</span>
+    </h1>
+    <p class="hero-subtitle">Experiencias competitivas de alta calidad creadas para jugadores de todo el mundo.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" (click)="scrollToGames()">EXPLORAR JUEGOS</button>
+      <button class="btn-secondary" (click)="scrollToNews()">VER NOTICIAS</button>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator" (click)="scrollToGames()">
+    <span class="scroll-text">SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- NEWS SECTION -->
+<section class="news-section" id="noticias">
+  <div class="section-header">
+    <div class="section-label">ULTIMAS</div>
+    <h2 class="section-title">ACTUALIDAD</h2>
+    <a href="https://www.riotgames.com/es/noticias" target="_blank" class="see-all">VER TODO</a>
+  </div>
+
+  <div class="news-grid">
+
+    <!-- Noticia principal -->
+    <div class="news-featured"
+      (mouseenter)="featuredHovered = true"
+      (mouseleave)="featuredHovered = false"
+      [class.featured-hovered]="featuredHovered">
+      <div class="news-img-wrap">
+        <img src="https://assets.games.gg/tft_set_16_patch_166_guide_key_changes_mistakes_to_avoid_hero_627a4ba8a3.webp"
+          class="featured-static-img" alt="TFT Remix Rumble">
+        <div class="news-gradient"></div>
+      </div>
+      <div class="news-content">
+        <span class="news-tag">NOTICIAS</span>
+        <h3>REMIX RUMBLE - YA DISPONIBLE</h3>
+        <p>Domina el escenario con las nuevas estrategias de TFT Set 13.</p>
+        <a href="https://teamfighttactics.leagueoflegends.com" target="_blank" class="news-link">VER SET →</a>
+      </div>
+    </div>
+
+    <!-- Noticias laterales -->
+    <div class="news-side">
+      <div class="news-card"
+        *ngFor="let news of sideNews; let i = index"
+        [class.active]="hoveredNews === i"
+        (mouseenter)="hoveredNews = i"
+        (mouseleave)="hoveredNews = -1">
+        <div class="news-card-img" [style.background-image]="'url(' + news.imageUrl + ')'"></div>
+        <div class="news-card-content">
+          <span class="news-tag">NOTICIAS</span>
+          <h4>{{ news.title }}</h4>
+          <a href="https://www.youtube.com/watch?v=5FrhtahQiRc" target="_blank" class="news-link-small">LEER MÁS →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GAMES SECTION -->
+<section class="games-section" id="juegos">
+  <div class="section-header">
+    <div class="section-label">PORTAFOLIO</div>
+    <h2 class="section-title">NUESTROS JUEGOS</h2>
+  </div>
+
+  <div class="games-carousel-wrapper">
+
+    <!-- Panel izquierdo: juego activo en grande -->
+    <div class="game-featured">
+      <img class="game-featured-img" [src]="games[activeGame].imageUrl" [alt]="games[activeGame].name">
+      <div class="game-featured-overlay"></div>
+      <div class="game-featured-info">
+        <span class="game-tag">PORTAFOLIO</span>
+        <h3 class="game-name">{{ games[activeGame].name }}</h3>
+        <p class="game-desc">{{ games[activeGame].desc }}</p>
+        <div class="game-platforms">
+          <span *ngFor="let p of games[activeGame].platforms" class="platform-badge">{{ p }}</span>
+        </div>
+        <a [href]="games[activeGame].url" target="_blank" class="game-cta">JUGAR AHORA &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Panel derecho: lista de juegos -->
+    <div class="games-list">
+      <div class="game-card"
+        *ngFor="let game of games; let i = index"
+        [class.active]="activeGame === i"
+        (click)="setActiveGame(i)"
+        (mouseenter)="setActiveGame(i)">
+        <div class="game-card-thumb">
+          <img [src]="game.imageUrl" [alt]="game.name">
+        </div>
+        <div class="game-card-body">
+          <div class="game-active-bar"></div>
+          <span class="game-card-tag">{{ game.shortName }}</span>
+          <div class="game-card-name">{{ game.name }}</div>
+          <div class="game-card-platforms">{{ game.platforms.join(' - ') }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ESPORTS SECTION -->
+<section class="esports-section" id="esports">
+  <div class="esports-bg"></div>
+  <div class="esports-content">
+    <div class="section-label">COMPETITIVO</div>
+    <h2 class="section-title">ESPORTS</h2>
+    <p class="esports-desc">Riot Games ha construido algunos de los ecosistemas de esports mas grandes del mundo. Desde
+      el Campeonato Mundial de LoL hasta el Masters de VALORANT.</p>
+    <div class="esports-stats">
+      <div class="stat" *ngFor="let s of esportsStats">
+        <div class="stat-number">{{ s.number }}</div>
+        <div class="stat-label">{{ s.label }}</div>
+      </div>
+    </div>
+    <button class="btn-primary">VER ESPORTS</button>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about-section" id="nosotros">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-img-frame">
+        <img src="/lapeor.jpeg" alt="Riot Games Office" class="about-custom-img">
+        <div class="frame-corner tl"></div>
+        <div class="frame-corner tr"></div>
+        <div class="frame-corner bl"></div>
+        <div class="frame-corner br"></div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">¿QUE ESTAMOS VIENDO?</div>
+      <h2 class="section-title">LA PEOR JUGADA <span class="accent">DEL JAIR</span></h2>
+      <p>Es totalmente imposible que haya quedando tan mal en una partida, pero como siempre se supera cada vez.
+      </p>
+      <p>
+        Es realmente un ejemplo de lo que NO se debe hacer?
+      </p>
+      <p>
+        Un genio incomprendido????
+      </p>
+      <p>
+        y encima era ranked :O
+      </p>
+      <div class="about-links">
+        <a href="https://op.gg/lol/summoners/lan/Failedbanjo-bruh/matches/YyfXz-4rKZ5W0i7myAVz0gI9AEdHf47Hg7WPYceaito%3D/1775697810000" class="about-link">SOBRE LA PARTIDA</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-logo">
+      <span class="logo-riot">RIOT</span>
+      <span class="logo-games">GAMES</span>
+    </div>
+    <div class="footer-links-grid">
+      <div class="footer-col">
+        <h4>JUEGOS</h4>
+        <ul>
+          <li><a href="https://www.leagueoflegends.com" target="_blank">League of Legends</a></li>
+          <li><a href="https://playvalorant.com" target="_blank">VALORANT</a></li>
+          <li><a href="https://teamfighttactics.leagueoflegends.com" target="_blank">TFT</a></li>
+          <li><a href="https://wildrift.leagueoflegends.com" target="_blank">Wild Rift</a></li>
+          <li><a href="https://playruneterra.com" target="_blank">Legends of Runeterra</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>COMPANIA</h4>
+        <ul>
+          <li><a href="#">Sobre Riot</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Prensa</a></li>
+          <li><a href="#">Investigacion</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SOPORTE</h4>
+        <ul>
+          <li><a href="#">Centro de Soporte</a></li>
+          <li><a href="#">Estado del servidor</a></li>
+          <li><a href="#">Politica de privacidad</a></li>
+          <li><a href="#">Terminos de servicio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SIGUENOS</h4>
+        <div class="social-links">
+          <a href="https://x.com/lollatam?lang=es" class="social-link">X</a>
+          <a href="https://www.linkedin.com/company/riot-games" class="social-link">in</a>
+          <a href="https://www.youtube.com/riotgames" class="social-link">yt</a>
+          <a href="https://www.instagram.com/lollatam" class="social-link">ig</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>2024 Riot Games, Inc. Todos los derechos reservados.</p>
+    <div class="footer-legal">
+      <a href="#">Privacidad</a>
+      <a href="#">Terminos</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
