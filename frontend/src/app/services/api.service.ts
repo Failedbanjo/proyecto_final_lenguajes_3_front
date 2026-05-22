@@ -7,22 +7,23 @@ export class ApiService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8000/api';
 
+  // Login: envía username y password, recibe JWT
   login(credentials: any) {
-  // Este endpoint lo crearemos en Django con SimpleJWT
-    return this.http.post(`${this.baseUrl}/token/`, credentials);
+    return this.http.post(`${this.baseUrl}/token`, credentials);
   }
 
-  // Un método para saber si está logueado
+  // Registro: envía username, email y password
+  register(userData: any) {
+    return this.http.post(`${this.baseUrl}/register`, userData);
+  }
+
+  // Verificación del código de 6 dígitos enviado al correo
+  verifyCode(data: { email: string, code: string }) {
+    return this.http.post<any>(`${this.baseUrl}/verify-email`, data);
+  }
+
+  // Verifica si hay un token guardado en localStorage
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
-  
-  // api.service.ts
-  register(userData: any) {
-    return this.http.post(`${this.baseUrl}/register/`, userData);
-}
-
-  verifyCode(data: { email: string, code: string }) {
-  return this.http.post<any>('http://127.0.0.1:8000/api/verify-email/', data);
-}
 }
