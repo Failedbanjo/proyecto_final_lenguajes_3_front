@@ -1,257 +1,333 @@
-/* shop.component.scss - Versión BLACK & GOLD */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500&display=swap');
 
+:host {
+  --riot-black: #0a0a0a;
+  --riot-dark: #111111;
+  --riot-dark-2: #1a1a1a;
+  --riot-gold: #C89B3C;
+  --riot-gold-light: #e8b84b;
+  --riot-gold-dim: rgba(200, 155, 60, 0.15);
+  --riot-red: #D13639;
+  --riot-white: #f0ede0;
+  --riot-gray: #9a9a9a;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  display: block;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+// ─── PAGE WRAPPER ────────────────────────────────────────────
 .shop-page-wrapper {
   min-height: 100vh;
-  position: relative;
-  /* Fondo oficial, pero con el overlay negro se verá mucho más sobrio */
-  background-image: url('https://cmsassets.rgpub.io/sanity/images/ds7s0t2z/production/49a997d9177196656778401309f928e461b6c7a0-3840x2160.jpg'); 
+  background-color: var(--riot-black);
+  background-image: url('https://cmsassets.rgpub.io/sanity/images/ds7s0t2z/production/49a997d9177196656778401309f928e461b6c7a0-3840x2160.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  font-family: 'Barlow Condensed', sans-serif;
-  background-color: #010a13; // Color de respaldo negro
+  font-family: var(--font-display);
+  position: relative;
 }
 
 .background-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  /* Gradiente de NEGRO a NEGRO más profundo, adiós azul */
-  background: linear-gradient(to bottom, rgba(1, 10, 19, 0.85), rgba(1, 10, 19, 0.98));
-  z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.98) 100%);
+  z-index: 0;
 }
 
-.shop-nav, .shop-container {
-  position: relative;
-  z-index: 2;
-}
+.shop-nav, .shop-container { position: relative; z-index: 2; }
 
+// ─── NAVBAR ──────────────────────────────────────────────────
 .shop-nav {
   display: flex;
   justify-content: space-between;
-  padding: 20px 60px;
-  background: rgba(0, 0, 0, 0.8); // Navbar más oscura
-  border-bottom: 1px solid #c8aa6e;
-  
-  .logo { 
-    color: #c8aa6e; 
-    cursor: pointer; 
-    font-weight: bold;
-    text-transform: uppercase;
+  align-items: center;
+  padding: 0 60px;
+  height: 68px;
+  background: rgba(10, 10, 10, 0.9);
+  border-bottom: 1px solid rgba(200, 155, 60, 0.25);
+  backdrop-filter: blur(12px);
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
     letter-spacing: 2px;
-    &:hover { color: #f0e6d2; }
+    color: rgba(240, 237, 224, 0.5);
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover { color: var(--riot-gold); }
   }
-  
-  .shop-title { 
-    color: white; 
-    letter-spacing: 4px; 
+
+  .shop-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: var(--riot-white);
     text-transform: uppercase;
-    .accent { color: #c8aa6e; } 
+    .accent { color: var(--riot-gold); }
   }
 }
 
+// ─── LAYOUT ──────────────────────────────────────────────────
 .shop-container {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 40px;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
   max-width: 1400px;
-  margin: 40px auto;
-  padding: 0 40px;
+  margin: 48px auto;
+  padding: 0 48px;
 }
 
-/* Tarjetas de Paquetes - AHORA NEGRAS */
+// ─── TÍTULO ──────────────────────────────────────────────────
+.riot-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--riot-gold);
+  margin-bottom: 28px;
+  padding-left: 14px;
+  border-left: 3px solid var(--riot-gold);
+  text-transform: uppercase;
+}
+
+// ─── GRID DE PAQUETES ────────────────────────────────────────
 .packages-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .item-card {
-  background: rgba(5, 13, 21, 0.95); // Gris casi negro
-  border: 1px solid #c8aa6e;
-  padding: 40px 20px;
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(200, 155, 60, 0.25);
+  padding: 36px 20px 28px;
   text-align: center;
-  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  cursor: pointer;
 
   &:hover {
-    transform: translateY(-8px);
-    background: #0a0a0a; // Negro puro al hover
-    border-color: #f0e6d2;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    transform: translateY(-6px);
+    border-color: rgba(200, 155, 60, 0.6);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 155, 60, 0.1);
+    background: #0d0d0d;
   }
 
   &.popular-border {
-    border: 2px solid #c89b3c;
-    background: rgba(200, 170, 110, 0.05); // Brillo dorado sutil
-    
+    border: 1px solid var(--riot-gold);
+    background: rgba(200, 155, 60, 0.04);
+
     .badge-popular {
-        background: #c89b3c;
-        color: #010a13;
-        font-weight: bold;
-        padding: 4px 12px;
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 0.75rem;
+      background: var(--riot-gold);
+      color: #010a13;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 
-  .rp-icon-container img {
-    width: 90px;
-    filter: drop-shadow(0 0 15px rgba(200, 170, 110, 0.4));
+  .rp-icon-container {
+    margin-bottom: 16px;
+    img {
+      width: 80px;
+      filter: drop-shadow(0 0 16px rgba(200, 155, 60, 0.5));
+      transition: filter 0.3s;
+    }
   }
 
-  .rp-amount { 
-    font-size: 2.2rem; 
-    color: #f0e6d2; 
-    margin: 20px 0 5px;
-    font-weight: 800;
+  &:hover .rp-icon-container img {
+    filter: drop-shadow(0 0 24px rgba(200, 155, 60, 0.8));
   }
-  
-  .price { 
-    color: #00ff88; 
-    font-weight: bold; 
-    font-size: 1.4rem; 
+
+  .item-info { margin-bottom: 20px; }
+
+  .rp-amount {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--riot-white);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .price {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4ade80;
     letter-spacing: 1px;
   }
 
   .btn-buy {
-    margin-top: 25px;
-    background: #1e2328;
-    color: #c8aa6e;
-    border: 1px solid #c8aa6e;
-    padding: 14px;
     width: 100%;
-    font-weight: bold;
+    padding: 12px;
+    background: transparent;
+    color: var(--riot-gold);
+    border: 1px solid rgba(200, 155, 60, 0.4);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.2s;
-    
-    &:hover { 
-      background: #c8aa6e; 
-      color: #010a13; 
+    transition: all 0.2s;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+
+    &:hover {
+      background: var(--riot-gold);
+      color: #010a13;
+      border-color: var(--riot-gold);
     }
   }
 }
 
-/* Panel Lateral - NEGRO TOTAL */
+// ─── PANEL LATERAL ───────────────────────────────────────────
 .side-panel {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .summary-box, .payment-box {
-  background: rgba(2, 6, 10, 0.98); // Negro profundo
-  border: 1px solid #c8aa6e;
-  padding: 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  background: rgba(10, 10, 10, 0.98);
+  border: 1px solid rgba(200, 155, 60, 0.25);
+  padding: 28px;
 }
 
-.panel-title { 
-  color: #c8aa6e; 
-  font-size: 1.3rem; 
-  margin-bottom: 25px; 
-  border-bottom: 1px solid rgba(200, 170, 110, 0.2); 
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--riot-gold);
+  margin-bottom: 24px;
   padding-bottom: 12px;
+  border-bottom: 1px solid rgba(200, 155, 60, 0.15);
   text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .summary-line {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 18px;
-  color: #a09b8c;
-  font-size: 1rem;
-  
-  span:last-child { color: #f0e6d2; } // Valores en crema
+  align-items: center;
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--riot-gray);
 
-  &.total { 
-    font-size: 2rem; 
-    border-top: 2px solid #c8aa6e; 
-    padding-top: 25px; 
-    margin-top: 25px;
+  span:last-child { color: var(--riot-white); }
+
+  &.highlight span:last-child { color: var(--riot-gold); font-size: 15px; font-weight: 700; }
+
+  &.total {
+    font-size: 18px;
+    font-weight: 800;
+    border-top: 1px solid rgba(200, 155, 60, 0.2);
+    padding-top: 20px;
+    margin-top: 20px;
   }
 }
 
-.green-text { color: #00ff88 !important; font-weight: bold; }
-.gold-text { color: #c89b3c !important; font-weight: bold; }
+.divider {
+  height: 1px;
+  background: rgba(200, 155, 60, 0.1);
+  margin: 8px 0;
+}
 
-/* Métodos de Pago - Estilo Dark */
+.green-text { color: #4ade80 !important; font-weight: 700; }
+.gold-text { color: var(--riot-gold) !important; font-weight: 700; }
+.white-text { color: var(--riot-white) !important; }
+
+// ─── MÉTODOS DE PAGO ─────────────────────────────────────────
 .payment-options {
   display: flex;
-  gap: 12px;
-  margin-bottom: 30px;
-  
+  gap: 10px;
+  margin-bottom: 24px;
+
   .pay-option {
     flex: 1;
-    background: #0a0a0a;
-    border: 1px solid #333;
-    padding: 15px;
+    background: var(--riot-dark-2);
+    border: 1px solid rgba(240, 237, 224, 0.08);
+    padding: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.3s;
     cursor: pointer;
-    
-    &:hover { border-color: #c8aa6e; }
-    
-    &.active { 
-      border-color: #c8aa6e; 
-      background: rgba(200, 170, 110, 0.1);
-      box-shadow: inset 0 0 10px rgba(200, 170, 110, 0.2);
+    transition: all 0.2s;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+
+    img {
+      height: 20px;
+      filter: brightness(0) invert(1) opacity(0.5);
+      transition: filter 0.2s;
     }
-    
-    img { 
-        height: 22px; 
-        filter: brightness(0) invert(1) opacity(0.7); // Logos en blanco sutil
+
+    &:hover, &.active {
+      border-color: rgba(200, 155, 60, 0.4);
+      background: rgba(200, 155, 60, 0.06);
+      img { filter: brightness(0) invert(1) opacity(0.85); }
     }
   }
 }
 
+// ─── BOTONES ─────────────────────────────────────────────────
 .btn-checkout {
-  background: #c89b3c;
-  color: #010a13;
   width: 100%;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 1.1rem;
+  padding: 16px;
+  background: var(--riot-gold);
+  color: #010a13;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  letter-spacing: 2px;
   border: none;
   cursor: pointer;
-  transition: 0.3s;
-  
-  &:hover:not(:disabled) { 
-    background: #f0e6d2;
-    transform: scale(1.02);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background: var(--riot-gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(200, 155, 60, 0.35);
   }
-  
-  &:disabled { 
-    background: #333; 
-    color: #666; 
-    cursor: not-allowed; 
+
+  &:disabled {
+    background: #222;
+    color: #444;
+    cursor: not-allowed;
   }
 }
 
 .btn-clear {
-  background: transparent;
-  color: #ff4655;
   width: 100%;
-  border: 1px solid rgba(255, 70, 85, 0.4);
+  background: transparent;
+  color: rgba(209, 54, 57, 0.7);
+  border: 1px solid rgba(209, 54, 57, 0.25);
   padding: 10px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.8rem;
   cursor: pointer;
   margin-top: 10px;
-  transition: 0.3s;
-  
-  &:hover { 
-    background: rgba(255, 70, 85, 0.1);
-    border-color: #ff4655;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(209, 54, 57, 0.08);
+    border-color: rgba(209, 54, 57, 0.5);
+    color: var(--riot-red);
   }
 }

@@ -22,7 +22,8 @@
         </div>
 
         <span class="summoner-label">INVOCADOR:</span>
-        <span class="summoner-name">{{ username | uppercase }}</span>
+        <span class="summoner-name" (click)="irAlPerfil()" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px">{{ username | uppercase }}</span>
+        <button class="nav-btn profile-btn" (click)="irAlPerfil()">MI PERFIL</button>
         <button class="logout-icon" (click)="logout()">✕</button>
       </div>
     </ng-container>

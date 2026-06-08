@@ -138,11 +138,25 @@
       background: var(--riot-gold);
       color: var(--riot-black);
       padding: 10px 24px;
-      border-radius: 2px;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 
       &:hover {
         background: var(--riot-gold-light);
         transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(200, 155, 60, 0.3);
+      }
+    }
+
+    &.profile-btn {
+      background: transparent;
+      color: var(--riot-gold);
+      padding: 8px 18px;
+      border: 1px solid rgba(200, 155, 60, 0.4);
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+
+      &:hover {
+        background: rgba(200, 155, 60, 0.1);
+        border-color: var(--riot-gold);
       }
     }
   }

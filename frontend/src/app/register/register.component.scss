@@ -1,93 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500&display=swap');
+
+:host {
+  --riot-black: #0a0a0a;
+  --riot-dark: #111111;
+  --riot-dark-2: #1a1a1a;
+  --riot-dark-3: #242424;
+  --riot-gold: #C89B3C;
+  --riot-gold-light: #e8b84b;
+  --riot-red: #D13639;
+  --riot-white: #f0ede0;
+  --riot-gray: #9a9a9a;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  display: block;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+// ─── PAGE ─────────────────────────────────────────────────────
 .login-page {
-  background-color: #000;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Barlow Condensed', sans-serif;
-}
+  background: var(--riot-black);
+  position: relative;
+  overflow: hidden;
 
-.login-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background: #111;
-}
+  // Grid sutil de fondo
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200, 155, 60, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200, 155, 60, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    pointer-events: none;
+  }
 
-.brand-panel {
-  flex: 1;
-  background-image: url('https://www.riotgames.com/darkroom/1440/0a8b4600c88cc7e4bd392b90405f892a:db36c4fc05c48e6fd4fb6b9799f6b2ca/11-20-embargo-riot-riotxarcane-phase02-4k.jpg'); // O tu imagen de T1/Faker
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: flex-end;
-  padding: 60px;
-  
-  .brand-title {
-    color: #fff;
-    font-size: 3rem;
-    line-height: 1;
-    .gold { color: #d0a85c; }
+  // Resplandor de fondo
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 20% 50%, rgba(200, 155, 60, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 30%, rgba(209, 54, 57, 0.06) 0%, transparent 50%);
+    pointer-events: none;
   }
 }
 
-.form-panel {
-  width: 450px;
-  background: #f9f9f9; // El gris claro de Riot
+// ─── CONTAINER ───────────────────────────────────────────────
+.login-container {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 960px;
+  min-height: 600px;
+  margin: 40px 24px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9);
+  animation: fadeInUp 0.7s ease forwards;
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+// ─── BRAND PANEL ─────────────────────────────────────────────
+.brand-panel {
+  position: relative;
+  background: linear-gradient(135deg, #0d1117 0%, #111827 60%, #0f1a2e 100%);
+  padding: 56px 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40px;
-  color: #111;
+  overflow: hidden;
+  border: 1px solid rgba(200, 155, 60, 0.15);
+  border-right: none;
+
+  // Línea separadora vertical dorada
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(200, 155, 60, 0.4), transparent);
+  }
+
+  // Líneas decorativas diagonales
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      25deg,
+      transparent,
+      transparent 80px,
+      rgba(200, 155, 60, 0.03) 80px,
+      rgba(200, 155, 60, 0.03) 81px
+    );
+  }
+
+  .brand-content { position: relative; z-index: 2; }
+
+  .logo-wrapper {
+    margin-bottom: 40px;
+    .riot-logo { width: 56px; height: 56px; opacity: 0.9; }
+  }
+
+  .brand-title {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--riot-white);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+
+    .gold { color: var(--riot-gold); }
+  }
+
+  .brand-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: rgba(240, 237, 224, 0.45);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+}
+
+// ─── FORM PANEL ──────────────────────────────────────────────
+.form-panel {
+  background: var(--riot-dark);
+  padding: 56px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(200, 155, 60, 0.15);
+  border-left: none;
+}
+
+.form-box {
+  width: 100%;
+
+  .form-title {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--riot-white);
+    margin-bottom: 6px;
+  }
+
+  .form-subtitle {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: rgba(240, 237, 224, 0.35);
+    margin-bottom: 32px;
+  }
+}
+
+// ─── FORM ────────────────────────────────────────────────────
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: rgba(240, 237, 224, 0.4);
+    transition: color 0.2s;
+  }
+
+  &:focus-within label { color: var(--riot-gold); }
 }
 
 .riot-input {
   width: 100%;
-  padding: 12px;
-  background: #ededed;
-  border: none;
-  border-radius: 4px;
-  margin-top: 5px;
-  font-weight: bold;
-  &:focus { outline: 2px solid #111; }
+  padding: 13px 16px;
+  background: var(--riot-dark-2);
+  border: 1px solid rgba(240, 237, 224, 0.08);
+  color: var(--riot-white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+
+  &::placeholder { color: rgba(240, 237, 224, 0.2); }
+  &:focus {
+    border-color: var(--riot-gold);
+    background: var(--riot-dark-3);
+  }
 }
 
-.field-group {
-  margin-bottom: 20px;
-  label { font-size: 11px; font-weight: 800; color: #333; }
+// Input del código de verificación
+.code-input {
+  text-align: center;
+  font-size: 28px !important;
+  letter-spacing: 12px;
+  font-family: 'Rajdhani', monospace;
+  padding: 16px !important;
+  color: var(--riot-gold) !important;
 }
 
+// ─── BOTÓN PRINCIPAL ─────────────────────────────────────────
 .riot-btn-red {
   width: 100%;
   padding: 15px;
-  background: #d13639;
-  color: white;
+  background: var(--riot-gold);
+  color: var(--riot-black);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
   border: none;
-  border-radius: 15px; // Un poco redondeado como Riot
-  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-  &:hover { background: #b02a2d; }
-  &:disabled { background: #555; // Un gris más oscuro para que se lea el blanco
-  color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.7;}
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: all 0.2s;
+  min-height: 50px;
+
+  &:hover:not(:disabled) {
+    background: var(--riot-gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(200, 155, 60, 0.35);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
-.code-input {
+// ─── MENSAJES DE ERROR ───────────────────────────────────────
+p[style*="color: red"],
+p[style*="color: #ff4655"] {
+  font-family: var(--font-body);
+  font-size: 12px;
+  padding: 10px 14px;
+  background: rgba(209, 54, 57, 0.1);
+  border: 1px solid rgba(209, 54, 57, 0.3);
+  border-left: 3px solid var(--riot-red);
+  color: #e07070 !important;
+}
+
+// ─── DESCRIPCIÓN VERIFICACIÓN ────────────────────────────────
+.verify-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(240, 237, 224, 0.5);
+  margin-bottom: 24px;
+  line-height: 1.6;
+
+  strong { color: var(--riot-gold); }
+}
+
+// ─── FOOTER DEL FORM ─────────────────────────────────────────
+.form-footer {
+  margin-top: 24px;
   text-align: center;
-  font-size: 24px;
-  letter-spacing: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(240, 237, 224, 0.35);
+
+  a {
+    color: var(--riot-gold);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-left: 8px;
+    transition: opacity 0.2s;
+    &:hover { opacity: 0.7; }
+  }
 }
 
-.d-none {
-  display: none !important;
-}
+.d-none { display: none !important; }
 
-// Estilo extra para que el código se vea centrado y grande
-.code-input {
-  text-align: center;
-  font-size: 24px !important;
-  letter-spacing: 8px;
-  font-family: monospace;
+// ─── RESPONSIVE ──────────────────────────────────────────────
+@media (max-width: 768px) {
+  .login-container {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin: 20px 16px;
+  }
+  .brand-panel { display: none; }
+  .form-panel {
+    padding: 40px 28px;
+    border-left: 1px solid rgba(200, 155, 60, 0.15);
+  }
 }

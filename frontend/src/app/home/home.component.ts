@@ -194,6 +194,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   prevGame(): void { if (this.activeGame > 0) this.setActiveGame(this.activeGame - 1); }
   getNewsImgClass(i: number): string { return 'news-img-' + (i + 1); }
   openLogin(): void { this.router.navigate(['/login']); }
+  irAlPerfil(): void { this.router.navigate(['/profile']); }
   scrollToGames(): void { if (isPlatformBrowser(this.platformId)) document.getElementById('juegos')?.scrollIntoView({ behavior: 'smooth' }); }
   scrollToNews(): void { if (isPlatformBrowser(this.platformId)) document.getElementById('noticias')?.scrollIntoView({ behavior: 'smooth' }); }
 }

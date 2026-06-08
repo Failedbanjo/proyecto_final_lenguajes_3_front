@@ -1,0 +1,79 @@
+<div class="profile-page">
+  <nav class="profile-nav">
+    <span class="nav-logo" (click)="volver()">RIOT GAMES</span>
+    <button class="btn-volver" (click)="volver()">← VOLVER AL INICIO</button>
+  </nav>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar"><span>{{ username.charAt(0).toUpperCase() }}</span></div>
+      <div class="profile-info">
+        <h1 class="profile-username">{{ username }}</h1>
+        <p class="profile-email">{{ email }}</p>
+      </div>
+    </div>
+
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Cargando perfil...</p>
+    </div>
+
+    <div class="profile-content" *ngIf="!isLoading">
+      <div class="profile-tabs">
+        <button class="tab-btn" [class.active]="seccionActiva === 'datos'" (click)="seccionActiva = 'datos'; mensajeExito = ''; mensajeError = ''">DATOS PERSONALES</button>
+        <button class="tab-btn" [class.active]="seccionActiva === 'password'" (click)="seccionActiva = 'password'; mensajeExito = ''; mensajeError = ''">CONTRASEÑA</button>
+      </div>
+
+      <div class="mensaje-exito" *ngIf="mensajeExito">✓ {{ mensajeExito }}</div>
+      <div class="mensaje-error" *ngIf="mensajeError">✕ {{ mensajeError }}</div>
+
+      <div class="form-section" *ngIf="seccionActiva === 'datos'">
+        <h2 class="section-title">EDITAR DATOS</h2>
+        <div class="form-group">
+          <label class="form-label">NOMBRE DE USUARIO</label>
+          <input class="form-input" type="text" [(ngModel)]="nuevoUsername" placeholder="Nombre de usuario" [class.has-value]="nuevoUsername.length > 0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CORREO ELECTRÓNICO</label>
+          <input class="form-input" type="email" [(ngModel)]="nuevoEmail" placeholder="Correo electrónico" [class.has-value]="nuevoEmail.length > 0">
+        </div>
+        <button class="btn-guardar" (click)="guardarDatos()" [disabled]="isSaving">{{ isSaving ? 'GUARDANDO...' : 'GUARDAR CAMBIOS' }}</button>
+      </div>
+
+      <div class="form-section" *ngIf="seccionActiva === 'password'">
+        <h2 class="section-title">CAMBIAR CONTRASEÑA</h2>
+        <div class="form-group">
+          <label class="form-label">CONTRASEÑA ACTUAL</label>
+          <div class="input-wrapper">
+            <input class="form-input" [type]="mostrarPasswordActual ? 'text' : 'password'" [(ngModel)]="passwordActual" placeholder="Contraseña actual" [class.has-value]="passwordActual.length > 0">
+            <button class="toggle-pass" (click)="mostrarPasswordActual = !mostrarPasswordActual">
+              <span *ngIf="!mostrarPasswordActual">👁</span>
+              <span *ngIf="mostrarPasswordActual">🙈</span>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">NUEVA CONTRASEÑA</label>
+          <div class="input-wrapper">
+            <input class="form-input" [type]="mostrarNuevaPassword ? 'text' : 'password'" [(ngModel)]="nuevaPassword" placeholder="Nueva contraseña" [class.has-value]="nuevaPassword.length > 0">
+            <button class="toggle-pass" (click)="mostrarNuevaPassword = !mostrarNuevaPassword">
+              <span *ngIf="!mostrarNuevaPassword">👁</span>
+              <span *ngIf="mostrarNuevaPassword">🙈</span>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CONFIRMAR NUEVA CONTRASEÑA</label>
+          <input class="form-input" type="password" [(ngModel)]="confirmarPassword" placeholder="Confirmar contraseña" [class.has-value]="confirmarPassword.length > 0">
+        </div>
+        <button class="btn-guardar" (click)="cambiarPassword()" [disabled]="isSaving">{{ isSaving ? 'ACTUALIZANDO...' : 'CAMBIAR CONTRASEÑA' }}</button>
+      </div>
+
+      <div class="danger-zone">
+        <h3 class="danger-title">ZONA DE PELIGRO</h3>
+        <p class="danger-desc">Esta acción eliminará tu cuenta permanentemente y no podrá deshacerse.</p>
+        <button class="btn-eliminar" (click)="eliminarCuenta()">ELIMINAR CUENTA</button>
+      </div>
+    </div>
+  </div>
+</div>
