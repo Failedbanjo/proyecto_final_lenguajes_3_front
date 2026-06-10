@@ -331,3 +331,16 @@
     color: var(--riot-red);
   }
 }
+
+.mensaje-exito-shop {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #4ade80;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  text-align: center;
+}

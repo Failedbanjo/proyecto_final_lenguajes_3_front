@@ -5,75 +5,151 @@
   </nav>
 
   <div class="profile-container">
+
+    <!-- Header -->
     <div class="profile-header">
-      <div class="profile-avatar"><span>{{ username.charAt(0).toUpperCase() }}</span></div>
+      <div class="profile-avatar">
+        <span>{{ username ? username.charAt(0).toUpperCase() : '?' }}</span>
+      </div>
       <div class="profile-info">
-        <h1 class="profile-username">{{ username }}</h1>
+        <h1 class="profile-username">{{ username }}<span class="tagline-header" *ngIf="tagline">&nbsp;#{{ tagline }}</span></h1>
         <p class="profile-email">{{ email }}</p>
+        <p class="profile-region" *ngIf="region">{{ region }}</p>
       </div>
     </div>
 
+    <!-- Loading -->
     <div class="loading-state" *ngIf="isLoading">
       <div class="spinner"></div>
       <p>Cargando perfil...</p>
     </div>
 
     <div class="profile-content" *ngIf="!isLoading">
-      <div class="profile-tabs">
-        <button class="tab-btn" [class.active]="seccionActiva === 'datos'" (click)="seccionActiva = 'datos'; mensajeExito = ''; mensajeError = ''">DATOS PERSONALES</button>
-        <button class="tab-btn" [class.active]="seccionActiva === 'password'" (click)="seccionActiva = 'password'; mensajeExito = ''; mensajeError = ''">CONTRASEÑA</button>
-      </div>
 
+      <!-- Mensajes -->
       <div class="mensaje-exito" *ngIf="mensajeExito">✓ {{ mensajeExito }}</div>
       <div class="mensaje-error" *ngIf="mensajeError">✕ {{ mensajeError }}</div>
 
-      <div class="form-section" *ngIf="seccionActiva === 'datos'">
-        <h2 class="section-title">EDITAR DATOS</h2>
-        <div class="form-group">
-          <label class="form-label">NOMBRE DE USUARIO</label>
-          <input class="form-input" type="text" [(ngModel)]="nuevoUsername" placeholder="Nombre de usuario" [class.has-value]="nuevoUsername.length > 0">
-        </div>
-        <div class="form-group">
-          <label class="form-label">CORREO ELECTRÓNICO</label>
-          <input class="form-input" type="email" [(ngModel)]="nuevoEmail" placeholder="Correo electrónico" [class.has-value]="nuevoEmail.length > 0">
-        </div>
-        <button class="btn-guardar" (click)="guardarDatos()" [disabled]="isSaving">{{ isSaving ? 'GUARDANDO...' : 'GUARDAR CAMBIOS' }}</button>
+      <!-- Pestañas -->
+      <div class="profile-tabs">
+        <button class="tab-btn" [class.active]="seccionActiva === 'riotid'" (click)="seccionActiva = 'riotid'; limpiarMensajes()">RIOT ID</button>
+        <button class="tab-btn" [class.active]="seccionActiva === 'personal'" (click)="seccionActiva = 'personal'; limpiarMensajes()">INFORMACIÓN PERSONAL</button>
+        <button class="tab-btn" [class.active]="seccionActiva === 'password'" (click)="seccionActiva = 'password'; limpiarMensajes()">CONTRASEÑA</button>
       </div>
 
+      <!-- ── RIOT ID ── -->
+      <div class="form-section" *ngIf="seccionActiva === 'riotid'">
+        <div class="section-card">
+          <div class="section-card-left">
+            <h2 class="section-card-title">Riot ID</h2>
+            <p class="section-card-desc">Tu Riot ID es usado por los jugadores para encontrarte en los juegos.</p>
+          </div>
+          <div class="section-card-right">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">GAME NAME</label>
+                <input class="form-input" type="text" [(ngModel)]="nuevoUsername" placeholder="Nombre de usuario" [class.has-value]="nuevoUsername.length > 0">
+              </div>
+              <div class="form-group tagline-group">
+                <label class="form-label">TAGLINE</label>
+                <div class="tagline-input-wrap">
+                  <span class="tagline-hash">#</span>
+                  <input class="form-input tagline-input" type="text" [(ngModel)]="nuevoTagline" placeholder="bruh" [class.has-value]="nuevoTagline.length > 0">
+                </div>
+              </div>
+            </div>
+            <button class="btn-guardar" (click)="guardarDatos()" [disabled]="isSaving">
+              {{ isSaving ? 'GUARDANDO...' : 'SAVE CHANGES' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── INFORMACIÓN PERSONAL ── -->
+      <div class="form-section" *ngIf="seccionActiva === 'personal'">
+        <div class="section-card">
+          <div class="section-card-left">
+            <h2 class="section-card-title">Personal Information</h2>
+            <p class="section-card-desc">Esta información es privada y no será compartida con otros jugadores.</p>
+          </div>
+          <div class="section-card-right">
+            <div class="form-group">
+              <label class="form-label">EMAIL ADDRESS</label>
+              <input class="form-input" type="email" [(ngModel)]="nuevoEmail" placeholder="correo@ejemplo.com" [class.has-value]="nuevoEmail.length > 0">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">COUNTRY / REGION</label>
+                <select class="form-input" [(ngModel)]="nuevaRegion">
+                  <option value="">Selecciona región</option>
+                  <option value="NA">Norteamérica (NA)</option>
+                  <option value="LAN">Latinoamérica Norte (LAN)</option>
+                  <option value="LAS">Latinoamérica Sur (LAS)</option>
+                  <option value="EUW">Europa Oeste (EUW)</option>
+                  <option value="EUNE">Europa Noreste (EUNE)</option>
+                  <option value="BR">Brasil (BR)</option>
+                  <option value="OCE">Oceanía (OCE)</option>
+                  <option value="KR">Corea (KR)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">DATE OF BIRTH</label>
+                <input class="form-input" type="date" [(ngModel)]="nuevaFechaNacimiento" [class.has-value]="nuevaFechaNacimiento.length > 0">
+              </div>
+            </div>
+            <button class="btn-guardar" (click)="guardarDatos()" [disabled]="isSaving">
+              {{ isSaving ? 'GUARDANDO...' : 'SAVE AND VERIFY' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CONTRASEÑA ── -->
       <div class="form-section" *ngIf="seccionActiva === 'password'">
-        <h2 class="section-title">CAMBIAR CONTRASEÑA</h2>
-        <div class="form-group">
-          <label class="form-label">CONTRASEÑA ACTUAL</label>
-          <div class="input-wrapper">
-            <input class="form-input" [type]="mostrarPasswordActual ? 'text' : 'password'" [(ngModel)]="passwordActual" placeholder="Contraseña actual" [class.has-value]="passwordActual.length > 0">
-            <button class="toggle-pass" (click)="mostrarPasswordActual = !mostrarPasswordActual">
-              <span *ngIf="!mostrarPasswordActual">👁</span>
-              <span *ngIf="mostrarPasswordActual">🙈</span>
+        <div class="section-card">
+          <div class="section-card-left">
+            <h2 class="section-card-title">Cambiar Contraseña</h2>
+            <p class="section-card-desc">Usa una contraseña segura que no uses en otros sitios.</p>
+          </div>
+          <div class="section-card-right">
+            <div class="form-group">
+              <label class="form-label">CONTRASEÑA ACTUAL</label>
+              <div class="input-wrapper">
+                <input class="form-input" [type]="mostrarPasswordActual ? 'text' : 'password'" [(ngModel)]="passwordActual" placeholder="Contraseña actual" [class.has-value]="passwordActual.length > 0">
+                <button class="toggle-pass" (click)="mostrarPasswordActual = !mostrarPasswordActual">
+                  <span *ngIf="!mostrarPasswordActual">👁</span>
+                  <span *ngIf="mostrarPasswordActual">🙈</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">NUEVA CONTRASEÑA</label>
+              <div class="input-wrapper">
+                <input class="form-input" [type]="mostrarNuevaPassword ? 'text' : 'password'" [(ngModel)]="nuevaPassword" placeholder="Nueva contraseña" [class.has-value]="nuevaPassword.length > 0">
+                <button class="toggle-pass" (click)="mostrarNuevaPassword = !mostrarNuevaPassword">
+                  <span *ngIf="!mostrarNuevaPassword">👁</span>
+                  <span *ngIf="mostrarNuevaPassword">🙈</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CONFIRMAR CONTRASEÑA</label>
+              <input class="form-input" type="password" [(ngModel)]="confirmarPassword" placeholder="Confirmar contraseña" [class.has-value]="confirmarPassword.length > 0">
+            </div>
+            <button class="btn-guardar" (click)="cambiarPassword()" [disabled]="isSaving">
+              {{ isSaving ? 'ACTUALIZANDO...' : 'CAMBIAR CONTRASEÑA' }}
             </button>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">NUEVA CONTRASEÑA</label>
-          <div class="input-wrapper">
-            <input class="form-input" [type]="mostrarNuevaPassword ? 'text' : 'password'" [(ngModel)]="nuevaPassword" placeholder="Nueva contraseña" [class.has-value]="nuevaPassword.length > 0">
-            <button class="toggle-pass" (click)="mostrarNuevaPassword = !mostrarNuevaPassword">
-              <span *ngIf="!mostrarNuevaPassword">👁</span>
-              <span *ngIf="mostrarNuevaPassword">🙈</span>
-            </button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">CONFIRMAR NUEVA CONTRASEÑA</label>
-          <input class="form-input" type="password" [(ngModel)]="confirmarPassword" placeholder="Confirmar contraseña" [class.has-value]="confirmarPassword.length > 0">
-        </div>
-        <button class="btn-guardar" (click)="cambiarPassword()" [disabled]="isSaving">{{ isSaving ? 'ACTUALIZANDO...' : 'CAMBIAR CONTRASEÑA' }}</button>
       </div>
 
+      <!-- Zona de peligro -->
       <div class="danger-zone">
         <h3 class="danger-title">ZONA DE PELIGRO</h3>
         <p class="danger-desc">Esta acción eliminará tu cuenta permanentemente y no podrá deshacerse.</p>
         <button class="btn-eliminar" (click)="eliminarCuenta()">ELIMINAR CUENTA</button>
       </div>
+
     </div>
   </div>
 </div>

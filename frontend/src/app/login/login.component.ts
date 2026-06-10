@@ -82,6 +82,7 @@ export class LoginComponent {
 
         // Guarda el token JWT devuelto por Django en localStorage para sesiones futuras
         localStorage.setItem('token', res.access);
+        localStorage.setItem('username', res.username);
 
         this.router.navigate(['/']); // Redirige al usuario a la página principal (home)
       },

@@ -56,7 +56,8 @@
           </div>
         </div>
         
-        <button class="btn-checkout" [disabled]="cartCount === 0" (click)="completarCompra()">
+        <div class="mensaje-exito-shop" *ngIf="mensajeExito">✓ {{ mensajeExito }}</div>
+        <button class="btn-checkout" [disabled]="cartCount === 0 || isCompletando" (click)="completarCompra()">
           COMPLETAR COMPRA
         </button>
         <button class="btn-clear" (click)="limpiarCarrito()">VACIAR</button>

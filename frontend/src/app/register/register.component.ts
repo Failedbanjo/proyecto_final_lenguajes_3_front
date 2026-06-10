@@ -38,6 +38,9 @@ export class RegisterComponent {
   username = '';          // Campo: nombre de usuario
   email = '';             // Campo: correo electrónico
   password = '';          // Campo: contraseña
+  tagline = '';           // Campo: tagline del Riot ID
+  region = '';            // Campo: región del jugador
+  fechaNacimiento = '';   // Campo: fecha de nacimiento
   verificationCode = '';  // Campo: código de verificación recibido por correo
 
   // --- Variables de control del flujo del formulario ---
@@ -62,7 +65,10 @@ export class RegisterComponent {
     this.apiService.register({
       username: this.username,
       email: this.email,
-      password: this.password
+      password: this.password,
+      tagline: this.tagline,
+      region: this.region,
+      fechaNacimiento: this.fechaNacimiento
     }).subscribe({
 
       // Callback de éxito: el backend procesó el registro correctamente

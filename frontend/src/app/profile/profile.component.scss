@@ -102,3 +102,116 @@ $font-body: 'Spiegel', Arial, sans-serif;
     &:hover { background: $riot-red; color: $riot-white; }
   }
 }
+
+// ── SECCIÓN CON CARD DIVIDIDA ────────────────────────────────
+.section-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(200, 155, 60, 0.1);
+
+  &:last-child { border-bottom: none; }
+}
+
+.section-card-left {
+  .section-card-title {
+    font-family: $font-display;
+    font-size: 18px;
+    font-weight: 800;
+    color: $riot-white;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .section-card-desc {
+    font-family: $font-body;
+    font-size: 13px;
+    color: $riot-gray;
+    line-height: 1.6;
+  }
+}
+
+.section-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+// Tagline con # prefix
+.tagline-group { }
+
+.tagline-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(13, 27, 46, 0.8);
+  border: 1px solid rgba(154, 154, 154, 0.2);
+  transition: border-color 0.2s;
+
+  &:focus-within { border-color: $riot-gold; }
+
+  .tagline-hash {
+    padding: 0 10px;
+    color: $riot-gold;
+    font-family: $font-display;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .tagline-input {
+    border: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    flex: 1;
+  }
+}
+
+// Perfil header con tagline
+.tagline-header {
+  color: $riot-gold;
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.profile-region {
+  font-family: $font-display;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: $riot-gold;
+  margin-top: 4px;
+}
+
+// Select con estilo
+select.form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23C89B3C' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+
+  option {
+    background: #1a1a1a;
+    color: #f0ede0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
