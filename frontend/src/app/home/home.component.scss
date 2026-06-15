@@ -1514,3 +1514,134 @@
   }
 }
 }
+// ─── RESPONSIVE ADICIONAL (MOBILE FIRST FIXES) ───────────────
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+    height: 60px;
+
+    .nav-left { gap: 16px; }
+    .nav-links { display: none !important; }
+
+    .nav-right {
+      gap: 6px;
+      .lang-btn { display: none; }
+      .login-btn { padding: 8px 14px; font-size: 11px; }
+      .profile-btn { padding: 6px 10px; font-size: 10px; }
+    }
+
+    .user-info-nav {
+      padding: 4px 8px;
+      gap: 6px;
+      .summoner-label { display: none; }
+      .summoner-name { font-size: 12px; }
+    }
+  }
+
+  .hero {
+    min-height: 100svh;
+
+    .hero-content {
+      padding: 0 20px;
+      max-width: 100%;
+
+      .hero-tagline { font-size: 11px; letter-spacing: 3px; }
+
+      .hero-title .title-line {
+        font-size: clamp(38px, 10vw, 60px);
+      }
+
+      .hero-subtitle { font-size: 14px; }
+
+      .hero-cta {
+        flex-direction: column;
+        gap: 12px;
+
+        .btn-primary, .btn-secondary {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+
+    .hero-scroll-indicator { left: 20px; bottom: 24px; }
+  }
+
+  .news-section {
+    padding: 48px 16px;
+
+    .news-grid { grid-template-columns: 1fr; }
+    .news-featured .news-img-wrap { height: 200px; }
+  }
+
+  .games-section {
+    padding: 60px 16px;
+
+    .games-carousel-wrapper {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .game-featured { height: 280px; }
+    .games-list { height: auto; gap: 6px; }
+    .game-card { flex: none; }
+  }
+
+  .esports-section {
+    padding: 60px 16px;
+
+    .esports-stats {
+      gap: 20px;
+      .stat .stat-number { font-size: 30px; }
+    }
+
+    .btn-primary { width: 100%; }
+  }
+
+  .about-section {
+    padding: 60px 16px;
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .about-visual { display: none; }
+  }
+
+  .footer {
+    .footer-top {
+      flex-direction: column;
+      gap: 32px;
+      padding: 40px 16px;
+    }
+
+    .footer-links-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .footer-bottom {
+      padding: 20px 16px;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .footer .footer-links-grid { grid-template-columns: 1fr; }
+
+  .news-section .news-card { grid-template-columns: 80px 1fr; }
+
+  .hero .hero-content .hero-title .title-line {
+    font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .esports-section .esports-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

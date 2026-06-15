@@ -342,3 +342,54 @@
   margin-bottom: 12px;
   text-align: center;
 }
+
+// ─── RESPONSIVE ──────────────────────────────────────────────
+
+@media (max-width: 900px) {
+  .shop-nav { padding: 0 24px; }
+
+  .shop-container {
+    grid-template-columns: 1fr;
+    padding: 0 24px;
+    margin: 32px auto;
+    gap: 24px;
+  }
+
+  .packages-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .side-panel {
+    order: -1; // Resumen primero en móvil
+  }
+}
+
+@media (max-width: 600px) {
+  .shop-nav {
+    padding: 0 16px;
+    height: 56px;
+
+    .shop-title { font-size: 14px; letter-spacing: 3px; }
+    .logo { font-size: 11px; }
+  }
+
+  .shop-container { padding: 0 16px; margin: 20px auto; }
+
+  .packages-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .item-card {
+    padding: 24px 12px 18px;
+
+    .rp-amount { font-size: 1.8rem; }
+    .price { font-size: 1rem; }
+
+    .rp-icon-container img { width: 56px; }
+  }
+
+  .summary-box, .payment-box { padding: 20px; }
+
+  .payment-options { gap: 6px; }
+}

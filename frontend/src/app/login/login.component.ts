@@ -64,7 +64,7 @@ export class LoginComponent {
 
     // Valida que ambos campos tengan valor; si no, muestra error y detiene la ejecución
     if (!this.username || !this.password) {
-      this.errorMessage = 'Por favor ingresa tu usuario y contraseña.';
+      this.errorMessage = 'Por favor ingresa tu usuario o correo y contraseña.';
       return; // Sale del método sin hacer la petición HTTP
     }
     
