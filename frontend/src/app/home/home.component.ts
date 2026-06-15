@@ -119,6 +119,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/shop']);
   }
 
+  openEsports(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.open('https://lolesports.com/es-MX/', '_blank');
+    }
+  }
+
   toggleCart(): void {
     this.showCartModal = !this.showCartModal;
   }
