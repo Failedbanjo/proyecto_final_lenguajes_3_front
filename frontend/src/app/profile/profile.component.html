@@ -1,15 +1,21 @@
 <div class="profile-page">
   <nav class="profile-nav">
-    <span class="nav-logo" (click)="volver()">RIOT GAMES</span>
-    <button class="btn-volver" (click)="volver()">← VOLVER AL INICIO</button>
+    <div class="nav-left">
+      <div class="riot-logo">RIOT GAMES</div>
+    </div>
   </nav>
 
   <div class="profile-container">
 
     <!-- Header -->
     <div class="profile-header">
-      <div class="profile-avatar">
-        <span>{{ username ? username.charAt(0).toUpperCase() : '?' }}</span>
+      <div class="profile-left">
+        <div class="profile-avatar">
+          <span>{{ username ? username.charAt(0).toUpperCase() : '?' }}</span>
+        </div>
+        <div class="profile-actions">
+          <button class="btn-volver" (click)="volver()">← VOLVER AL INICIO</button>
+        </div>
       </div>
       <div class="profile-info">
         <h1 class="profile-username">{{ username }}<span class="tagline-header" *ngIf="tagline">&nbsp;#{{ tagline }}</span></h1>
@@ -18,17 +24,20 @@
       </div>
     </div>
 
-    <!-- Loading -->
-    <div class="loading-state" *ngIf="isLoading">
+    <!-- Mensajes (siempre visibles) -->
+    <div class="mensaje-exito" *ngIf="mensajeExito">✓ {{ mensajeExito }}</div>
+    <div class="mensaje-error" *ngIf="mensajeError">
+      ✕ {{ mensajeError }}
+      <button class="btn-volver" style="margin-left:12px; padding:8px 12px; font-size:12px;" (click)="irAlLogin()">IR A LOGIN</button>
+    </div>
+
+    <!-- Loading (oculto si hay mensaje de error) -->
+    <div class="loading-state" *ngIf="isLoading && !mensajeError">
       <div class="spinner"></div>
       <p>Cargando perfil...</p>
     </div>
 
     <div class="profile-content" *ngIf="!isLoading">
-
-      <!-- Mensajes -->
-      <div class="mensaje-exito" *ngIf="mensajeExito">✓ {{ mensajeExito }}</div>
-      <div class="mensaje-error" *ngIf="mensajeError">✕ {{ mensajeError }}</div>
 
       <!-- Pestañas -->
       <div class="profile-tabs">
@@ -59,7 +68,7 @@
               </div>
             </div>
             <button class="btn-guardar" (click)="guardarDatos()" [disabled]="isSaving">
-              {{ isSaving ? 'GUARDANDO...' : 'SAVE CHANGES' }}
+              {{ isSaving ? 'GUARDANDO...' : 'GUARDAR CAMBIOS' }}
             </button>
           </div>
         </div>
@@ -98,7 +107,7 @@
               </div>
             </div>
             <button class="btn-guardar" (click)="guardarDatos()" [disabled]="isSaving">
-              {{ isSaving ? 'GUARDANDO...' : 'SAVE AND VERIFY' }}
+              {{ isSaving ? 'GUARDANDO...' : 'GUARDAR Y VERIFICAR' }}
             </button>
           </div>
         </div>

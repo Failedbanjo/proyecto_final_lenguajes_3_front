@@ -38,7 +38,6 @@
 <section class="hero" id="hero">
   <div class="hero-bg">
     <img src="/t1.jpg" alt="Background" class="hero-img-main">
-
     <div class="hero-overlay"></div>
     <div class="hero-particles">
       <span *ngFor="let p of particles" class="particle" [style.left.%]="p.x" [style.top.%]="p.y"
@@ -93,18 +92,20 @@
       </div>
     </div>
 
-    <!-- Noticias laterales -->
+    <!-- Noticias laterales — imagen real + link individual por noticia -->
     <div class="news-side">
       <div class="news-card"
         *ngFor="let news of sideNews; let i = index"
         [class.active]="hoveredNews === i"
         (mouseenter)="hoveredNews = i"
         (mouseleave)="hoveredNews = -1">
-        <div class="news-card-img" [style.background-image]="'url(' + news.imageUrl + ')'"></div>
+        <div class="news-card-img">
+          <img [src]="news.imageUrl" [alt]="news.title">
+        </div>
         <div class="news-card-content">
           <span class="news-tag">NOTICIAS</span>
           <h4>{{ news.title }}</h4>
-          <a href="https://www.youtube.com/watch?v=5FrhtahQiRc" target="_blank" class="news-link-small">LEER MÁS →</a>
+          <a [href]="news.url" target="_blank" class="news-link-small">LEER MÁS →</a>
         </div>
       </div>
     </div>
@@ -191,22 +192,15 @@
     <div class="about-text">
       <div class="section-label">¿QUE ESTAMOS VIENDO?</div>
       <h2 class="section-title">LA MEJOR JUGADA <span class="accent">DEL MUNDIAL</span></h2>
-      <p>Es totalmente imposible creer esta jugada por parte de T1 contra INVICTUS GAMING en el mundial de LoL. 
-      </p>
-      <p>
-         gran paso para T1 y un gran paso para sus integrantes.
-      </p>
-      <p>
-        Esto es todo lo que debes de saber sobre la jugada.Un
-      </p>
-
+      <p>Es totalmente imposible creer esta jugada por parte de T1 contra INVICTUS GAMING en el mundial de LoL.</p>
+      <p>Gran paso para T1 y un gran paso para sus integrantes.</p>
+      <p>Esto es todo lo que debes de saber sobre la jugada.</p>
       <div class="about-links">
         <a href="https://www.youtube.com/watch?v=smssS6im4vg" class="about-link">SOBRE LA PARTIDA</a>
       </div>
     </div>
   </div>
 </section>
-
 
 <!-- FOOTER -->
 <footer class="footer">

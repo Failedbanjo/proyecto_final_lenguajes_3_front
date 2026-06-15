@@ -13,6 +13,9 @@ export class ApiService {
     if (isPlatformBrowser(this.platformId)) {
       token = localStorage.getItem('token') || '';
     }
+    if (isPlatformBrowser(this.platformId)) {
+      console.debug('[ApiService] getHeaders token:', token?.substring(0, 10) + (token && token.length > 10 ? '...' : ''));
+    }
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 

@@ -45,8 +45,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    console.debug('[Profile] ngOnInit: checking auth token');
     const token = localStorage.getItem('token');
-    if (!token) { this.router.navigate(['/login']); return; }
+    if (!token) {
+      this.isLoading = false;
+      this.mensajeError = 'No estás autenticado. Inicia sesión para ver tu perfil.';
+      console.debug('[Profile] no token found, showing login message');
+      return;
+    }
     this.cargarPerfil();
   }
 
@@ -57,6 +63,7 @@ export class ProfileComponent implements OnInit {
 
   cargarPerfil(): void {
     this.isLoading = true;
+    console.debug('[Profile] cargarPerfil: token currently =', isPlatformBrowser(this.platformId) ? localStorage.getItem('token') : null);
     this.apiService.getPerfil().subscribe({
       next: (res: any) => {
         this.isLoading = false;
@@ -79,14 +86,18 @@ export class ProfileComponent implements OnInit {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
           }
-          this.router.navigate(['/login']);
+          this.mensajeError = 'Sesión expirada. Por favor inicia sesión de nuevo.';
+          console.debug('[Profile] token expired or unauthorized');
         } else {
           this.mensajeError = 'No se pudieron cargar los datos del perfil.';
+          console.error('[Profile] cargarPerfil error', err);
         }
         this.cdr.detectChanges();
       }
     });
   }
+
+  irAlLogin(): void { this.router.navigate(['/login']); }
 
   // Guarda datos de Riot ID e información personal
   guardarDatos(): void {
